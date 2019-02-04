@@ -1,0 +1,27 @@
+{
+  "name": "learn_server",
+  "version": "1.0.0",
+  "description": "'Programming site learn in krio and english'",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
+    "expect": "^23.6.0",
+    "express": "^4.16.4",
+    "graphql-yoga": "^1.16.9",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.4.2",
+    "time-stamp": "^2.2.0",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "test": "mocha **/*.test.js"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "supertest": "^3.3.0"
+  }
+}

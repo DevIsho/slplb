@@ -1,0 +1,229 @@
+type Query {
+    Teams: [Team]
+    Team(id: ID): Team
+    Fixtures: [Fixture]
+    Fixture(id: ID): [Fixture]
+    Results: [Result]
+    Result(id: ID): [Result]
+    Matches: [Match]
+    Report(reporter: ID): Match
+    LiveMatch: Fixture
+    News: [News]
+    OneNews(id: ID): News
+    Table: [Table]
+    onTable(id: ID): [Table]
+    NextGame: Fixture
+}
+
+type Subscription{
+    count: Int!
+    Time: Time
+}
+
+type Mutation {
+    Teams: [Team],
+    Fixture(
+        date: String!,
+        home: ID!,
+        away: ID!
+    ): Fixture,
+    Results(
+        date: String!,
+        home: ID!,
+        away: ID!,
+        homeTeam: String!,
+        awayTeam: String!
+    ): Result
+    newMatch(
+        date: String!,
+        home: ID!,
+        away: ID!,
+        reporter: ID!,
+        gameId: ID!
+    ): Fixture
+    LiveTime(
+        id: ID!,
+        time: Int!
+    ): Match
+}
+
+type Team {
+    _id: ID
+    name: String
+    image: String
+    stadium: String
+    staff: [Staff]
+    squad: [Squad]
+    games: [Game]
+}
+
+type Time {
+    _id: ID
+    time: String
+}
+
+type Squad {
+    _id: ID
+    name: String
+    number: String
+    nationality: String
+    age: String
+    dob: String
+    height: String
+    position: String
+    pos: String
+    appearances: String
+    subs: String
+    cleanSheets: String
+    goals: String
+    assists: String
+}
+
+type Table {
+    _id: ID
+    team: Team
+    played: String
+    win: String
+    draw: String
+    lost: String
+    gf: String
+    ga: String
+    gd: String
+    form: [Form]
+    point: String
+    pos: String
+}
+
+type Fixture {
+    _id: ID
+    date: String
+    games: [Game]
+}
+
+type Staff {
+    role: String
+    name: String
+}
+
+type Form {
+    _id: ID
+    result: [Result]
+}
+
+type Result {
+    _id: ID
+    date: String
+    visible: Boolean
+    game: [Game]
+}
+
+type Match{
+    _id: ID
+    date: String
+    time: String
+    reporter: String
+    status: String
+    live: String
+    home: Home
+    away: Away
+    details: GameDatails
+}
+
+type GameDatails {
+    _id: ID
+    lineUp: LineUps,
+    matchInfo: MatchInfo
+    statistics: Statistics
+}
+
+type LineUps {
+    lineUp: LineUp
+    substitute: Substitute
+    substitutions: Substitutions
+}
+
+type LineUp {
+    home: [String]
+    away: [String]
+}
+
+type Substitute {
+    home: [String]
+    away: [String]
+}
+
+type Substitutions {
+    home: [Sub]
+    away: [Sub]
+}
+
+type Sub {
+    in: String
+    out: String
+}
+
+type MatchInfo {
+    yellowCard: [YellowCard]
+    redCard: [RedCard]
+    goals: [Goals]
+}
+
+type YellowCard {
+    time: String,
+    player: String
+}
+
+type RedCard {
+    time: String,
+    player: String
+}
+
+type Goals {
+    time: String
+    player: String
+}
+
+type Statistics {
+    onTarget: Stat
+    offTarget: Stat
+    possession: Stat
+    corners: Stat
+    offsides: Stat
+    fouls: Stat
+    goalKicks: Stat
+}
+
+type Stat {
+    home: String
+    away: String
+}
+
+type News {
+    _id: ID
+    date: String
+    title: String
+    subTitle: String
+    news: String
+    image: String
+}
+
+type Game {
+    _id: ID
+    home: Home
+    away: Away
+    homeTeam: String
+    awayTeam: String
+}
+
+type Home {
+    _id: ID
+    name: String
+    image: String
+    stadium: String
+}
+
+type Away {
+    _id: ID
+    name: String
+    image: String
+}
