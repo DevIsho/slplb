@@ -6,7 +6,7 @@ import News from "./News";
 import Table from "./Table";
 import Match from "./MatchUpdate";
 
-mongoose.connect('mongodb://localhost/SLAFA');
+mongoose.connect('mongodb://isho:isho1%40gmail.com@ds223015.mlab.com:23015/slplb_database');
 
 const db = {
     Teams,
