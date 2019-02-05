@@ -46,6 +46,15 @@ const resolvers = {
         })
     }
   },
+  Player: {
+    team(parent, args, ctx, info) {
+      return ctx.db.Teams.findById(parent.team)
+        .then(player => {
+
+          return player
+        })
+    }
+  },
   Match: {
     home(parent, args, ctx, info) {
       return ctx.db.Teams.findById(parent.home)

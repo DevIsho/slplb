@@ -81,7 +81,7 @@ type Time {
 type Player {
     _id: ID
     name: String
-    team: ID
+    team: Team
     number: String
     nationality: String
     age: String
