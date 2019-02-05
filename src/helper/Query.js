@@ -19,6 +19,24 @@ const Query = {
                 console.log(e);
             });
     },
+    Players(parent, args, ctx, info) {
+        return ctx.db.Player.find()
+            .then(players => {
+                return players
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    },
+    Player(parent, args, ctx, info) {
+        return ctx.db.Player.findById(args.id)
+            .then(player => {
+                return player
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    },
     Matches(parent, args, ctx, info) {
         return ctx.db.Match.find()
             .then(match => {

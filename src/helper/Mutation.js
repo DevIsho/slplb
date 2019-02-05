@@ -36,7 +36,9 @@ const Mutation = {
             .catch()
 
     },
-    Team(parent, args, { db }, info){
+    Team(parent, args, {
+        db
+    }, info) {
         let body = _.pick(args, ['name', 'image', 'stadium']);
 
         let team = new db.Teams(body);
@@ -45,7 +47,30 @@ const Mutation = {
                 return team;
             })
             .catch(e => {
-                console.log(e);                
+                console.log(e);
+            })
+    },
+    Player(parent, args, {
+        db
+    }, info) {
+        let body = _.pick(args, [
+            'name',
+            'team',
+            'number',
+            'nationality',
+            'age',
+            'dob',
+            'height',
+            'position'
+        ]);
+
+        let player = new db.Player(body);
+        return player.save()
+            .then(player => {
+                return player;
+            })
+            .catch(e => {
+                console.log(e);
             })
     },
     Results(parent, args, ctx, info) {
@@ -142,7 +167,9 @@ const Mutation = {
                     time: match.time
                 }
 
-                ctx.pubsub.publish('time', {Time})
+                ctx.pubsub.publish('time', {
+                    Time
+                })
                 return match;
             })
             .catch(e => {

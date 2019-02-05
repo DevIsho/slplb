@@ -1,6 +1,8 @@
 type Query {
     Teams: [Team]
     Team(id: ID): Team
+    Players: [Player]
+    Player(id: ID): Player
     Fixtures: [Fixture]
     Fixture(id: ID): [Fixture]
     Results: [Result]
@@ -26,7 +28,16 @@ type Mutation {
         image: String!,
         stadium: String!
     ): Team
-
+    Player(
+        name: String,
+        team: String,
+        number: String,
+        nationality: String,
+        age: String,
+        dob: String,
+        height: String,
+        position: String
+    ): Player
     Fixture(
         date: String!,
         home: ID!,
@@ -59,7 +70,6 @@ type Team {
     image: String
     stadium: String
     staff: [Staff]
-    squad: [Squad]
     games: [Game]
 }
 
@@ -68,16 +78,16 @@ type Time {
     time: String
 }
 
-type Squad {
+type Player {
     _id: ID
     name: String
+    team: ID
     number: String
     nationality: String
     age: String
     dob: String
     height: String
     position: String
-    pos: String
     appearances: String
     subs: String
     cleanSheets: String
