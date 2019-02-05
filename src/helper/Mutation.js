@@ -36,6 +36,18 @@ const Mutation = {
             .catch()
 
     },
+    Team(parent, args, { db }, info){
+        let body = _.pick(args, ['name', 'image', 'stadium']);
+
+        let team = new db.Teams(body);
+        return team.save()
+            .then(team => {
+                return team;
+            })
+            .catch(e => {
+                console.log(e);                
+            })
+    },
     Results(parent, args, ctx, info) {
         let body = _.pick(args, ['date']);
         body.games = [];

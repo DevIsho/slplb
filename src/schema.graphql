@@ -21,12 +21,18 @@ type Subscription{
 }
 
 type Mutation {
-    Teams: [Team],
+    Team(
+        name: String!,
+        image: String!,
+        stadium: String!
+    ): Team
+
     Fixture(
         date: String!,
         home: ID!,
         away: ID!
-    ): Fixture,
+    ): Fixture
+
     Results(
         date: String!,
         home: ID!,
