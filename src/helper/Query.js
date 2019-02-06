@@ -92,6 +92,9 @@ const Query = {
     },
     NextGame(parent, args, ctx, info) {
         return ctx.db.Fixtures.findOne()
+            .sort({
+                date: 1
+            })
             .then(fixtures => {
                 return fixtures
             })
