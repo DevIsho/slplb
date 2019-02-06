@@ -50,19 +50,19 @@ const Query = {
         return ctx.db.Fixtures.findOne()
             .then(fix => {
                 let customFix, fixture;
-                
+
                 fixture = fix;
 
                 customFix = fix.games;
 
                 customFix = customFix.filter(g => {
                     if (g.assign === 'false')
-                       return g;
+                        return g;
                 });
-                
+
                 fixture.games = customFix;
 
-                return fixture;                  
+                return fixture;
             })
             .catch(e => {
                 console.log(e);
@@ -77,8 +77,12 @@ const Query = {
                 console.log(e);
             });
     },
-    Report(parent, {reporter}, ctx, info) {
-        return ctx.db.Match.findOne({reporter: reporter})
+    Report(parent, {
+        reporter
+    }, ctx, info) {
+        return ctx.db.Match.findOne({
+                reporter: reporter
+            })
             .then(news => {
                 return news
             })
@@ -178,7 +182,7 @@ const Query = {
                     } else {
                         onTable = table.slice(inx - 2, inx + 1);
                     }
-                }else{
+                } else {
                     onTable = table.slice(inx, inx + 3);
                 }
 
@@ -191,6 +195,9 @@ const Query = {
     Fixtures(parent, args, ctx, info) {
 
         return ctx.db.Fixtures.find()
+            .sort({
+                date: 1
+            })
             .then(fixtures => {
                 return fixtures
             })
