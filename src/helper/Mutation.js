@@ -74,10 +74,10 @@ const Mutation = {
             })
     },
     Results(parent, args, ctx, info) {
-        let body = _.pick(args, ['date']);
+        let body = _.pick(args, ['date', 'season']);
         body.games = [];
 
-        body.games.push(_.pick(args, ['home', 'away', 'homeTeam', 'awayTeam']));
+        body.games.push(_.pick(args, ['home', 'away', 'homeGoals', 'awayGoals']));
 
         return ctx.db.Results.find({
                 date: body.date
@@ -90,17 +90,20 @@ const Mutation = {
                             _id: results._id
                         }, {
                             $push: {
-                                games: _.pick(args, ['home', 'away', 'homeTeam', 'awayTeam'])
+                                games: _.pick(args, ['home', 'away', 'homeGoals', 'awayGoals'])
                             }
                         }, {
                             new: true
                         }).then(data => {
+                            console.log(data);
+                            
                             return data
                         })
                     })
                 } else {
                     new ctx.db.Results(body).save()
                         .then(data => {
+                            console.log(data);
                             return data
                         })
                         .catch(e => console.log())

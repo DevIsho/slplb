@@ -7,28 +7,148 @@ ObjectId.prototype.valueOf = function () {
 }
 
 const ResultSchame = mongoose.Schema({
+    season: {
+        type: String
+    },
     date: {
         type: String
     },
-    visible: {
-        type: Boolean
-    },
-    game: [{
+    games: [{
         home: {
             type: String
         },
         away: {
             type: String
         },
-        venu: {
-            type: String
+        homeGoals: {
+            type: Number
         },
-        homeTeam: {
-            type: String
+        awayGoals: {
+            type: Number
         },
-        awayTeam: {
-            type: String
-        }
+        lineUp: {
+            starting: [{
+                home: [{
+                    type: String
+                }],
+                away: [{
+                    type: String
+                }]
+            }],
+            substitutes: [{
+                home: [{
+                    type: String
+                }],
+                away: [{
+                    type: String
+                }]
+            }],
+            substitution: [{
+                home: [{
+                    time: {
+                        type: String
+                    },
+                    in: {
+                        type: String
+                    },
+                    out: {
+                        type: String
+                    }
+                }],
+                away: [{
+                    time: {
+                        type: String
+                    },
+                    in: {
+                        type: String
+                    },
+                    out: {
+                        type: String
+                    }
+                }]
+            }]
+        },
+        matchDetials: {
+            yellowCard: [{
+                home: [{
+                    player: {
+                        type: String
+                    },
+                    time: {
+                        type: String
+                    }
+                }],
+                away: [{
+                    player: {
+                        type: String
+                    },
+                    time: {
+                        type: String
+                    }
+                }]
+            }],
+            redCard: [{
+                home: [{
+                    player: {
+                        type: String
+                    },
+                    time: {
+                        type: String
+                    }
+                }],
+                away: [{
+                    player: {
+                        type: String
+                    },
+                    time: {
+                        type: String
+                    }
+                }]
+            }],
+            goal: [{
+                home: [{
+                    player: {
+                        type: String
+                    },
+                    goal: {
+                        type: String
+                    },
+                    og: {
+                        type: String
+                    },
+                    time: {
+                        type: String
+                    }
+                }],
+                away: [{
+                    player: {
+                        type: String
+                    },
+                    goal: {
+                        type: String
+                    },
+                    og: {
+                        type: String
+                    },
+                    time: {
+                        type: String
+                    }
+                }]
+            }]
+        },
+        stats: [{
+            name: {
+                type: String
+            },
+            stats: {
+                home: {
+                    type: String
+                },
+                away: {
+                    type: String
+                }
+            }
+        }]
     }]
 });
 

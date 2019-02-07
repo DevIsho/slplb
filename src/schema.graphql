@@ -45,12 +45,14 @@ type Mutation {
     ): Fixture
 
     Results(
+        season: String!,
         date: String!,
         home: ID!,
         away: ID!,
-        homeTeam: String!,
-        awayTeam: String!
+        homeGoals: String!,
+        awayGoals: String!
     ): Result
+
     newMatch(
         date: String!,
         home: ID!,
@@ -126,12 +128,7 @@ type Form {
     result: [Result]
 }
 
-type Result {
-    _id: ID
-    date: String
-    visible: Boolean
-    game: [Game]
-}
+
 
 type Match{
     _id: ID
@@ -223,14 +220,6 @@ type News {
     image: String
 }
 
-type Game {
-    _id: ID
-    home: Home
-    away: Away
-    homeTeam: String
-    awayTeam: String
-}
-
 type Home {
     _id: ID
     name: String
@@ -242,4 +231,22 @@ type Away {
     _id: ID
     name: String
     image: String
+}
+
+
+# Result
+type Result {
+    _id: ID
+    date: String
+    season: String
+    games: [Game]
+}
+
+# Game
+type Game {
+    _id: ID
+    home: Home
+    away: Away
+    homeGoals: String
+    awayGoals: String
 }
