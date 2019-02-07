@@ -33,7 +33,9 @@ const Mutation = {
                         .catch(e => console.log())
                 }
             })
-            .catch()
+            .catch(e => {
+                console.log(e);                
+            });
 
     },
     Team(parent, args, {
