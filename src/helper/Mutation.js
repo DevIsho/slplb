@@ -22,7 +22,7 @@ const Mutation = {
                         }, {
                             new: true
                         }).then(data => {
-                            return data
+                            return data;
                         })
                     })
                 } else {
