@@ -245,6 +245,9 @@ const Query = {
     Results(parent, args, ctx, info) {
 
         return ctx.db.Results.find()
+            .sort({
+                date: -1
+            })
             .then(results => {
                 return results
             })
