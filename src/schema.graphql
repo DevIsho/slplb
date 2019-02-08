@@ -139,6 +139,7 @@ type Staff {
 
 type Form {
     _id: ID
+    status: String
     result: [Result]
 }
 
