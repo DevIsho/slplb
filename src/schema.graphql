@@ -74,6 +74,14 @@ type Mutation {
         status: String
         result: String        
     ): Table
+
+    # News
+    News(
+        title: String,
+        subTitle: String,
+        news: String,
+        image: String
+    ): News
 }
 
 type Team {

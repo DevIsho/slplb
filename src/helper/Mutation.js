@@ -311,6 +311,22 @@ const Mutation = {
             }
         })
 
+    },
+
+    // News
+    News(parent, args, {
+        db
+    }, info) {
+
+        let body = _.pick(args, ['title', 'subTitle', 'image', 'news']);
+        body.date = new Date().toISOString();
+
+        let news = new db.News(body);
+        return news.save()
+            .then(data => {
+                return data
+            })
+        
     }
 }
 
