@@ -104,30 +104,50 @@ const Query = {
     },
     Table(parent, args, ctx, info) {
         return ctx.db.Table.find()
-            .sort({
-                point: -1
-            })
             .exec()
             .then(table => {
-                table.map(row => {
-                    let gd = parseInt(row.gf) - parseInt(row.ga)
 
-                    if (gd > 0) {
-                        row.gd = "+" + gd
-                    } else {
-                        row.gd = gd
+                table.map(data => {
+                    data.table.map((row, index) => {
+                        let gd = row.gf - row.ga
+
+                        if (gd > 0) {
+                            row.gd = "+" + gd
+                        } else {
+                            row.gd = gd
+                        }
+
+                    });
+                    function compare(a, b) {
+                        if (a.gd > b.gd)
+                            return -1;
+                        if (a.gd < b.gd)
+                            return 1;
+
+                        return 0;
                     }
-                });
 
-                function compare(a, b) {
-                    if (a.gd > b.gd)
-                        return -1;
-                    if (a.gd < b.gd)
-                        return 1;
-                    return 0;
-                }
 
-                table.sort(compare);
+                    data.table.sort(compare);
+
+                    return data;
+                })
+
+                table.map(data => {
+                    function compare(a, b) {
+                        if (a.point > b.point)
+                            return -1;
+                        if (a.point < b.point)
+                            return 1;
+
+                        return 0;
+                    }
+
+
+                    data.table.sort(compare);
+
+                    return data;
+                })
 
                 return table
             })

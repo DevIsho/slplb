@@ -29,7 +29,7 @@ const resolvers = {
         })
     }
   },
-  Table: {
+  TB: {
     team(parent, args, ctx, info) {
       return ctx.db.Teams.findById(parent.team)
         .then(data => {

@@ -64,6 +64,16 @@ type Mutation {
         id: ID!,
         time: Int!
     ): Match
+
+    # Table
+    Table(
+        season: String!,
+        team: String,
+        gf: Int,
+        ga: Int,
+        status: String
+        result: String        
+    ): Table
 }
 
 type Team {
@@ -99,17 +109,21 @@ type Player {
 
 type Table {
     _id: ID
+    table: [TB]
+}
+
+type TB {
     team: Team
-    played: String
-    win: String
-    draw: String
-    lost: String
-    gf: String
-    ga: String
+    played: Int
+    win: Int
+    draw: Int
+    lost: Int
+    gf: Int
+    ga: Int
     gd: String
     form: [Form]
-    point: String
-    pos: String
+    point: Int
+    pos: Int
 }
 
 type Fixture {

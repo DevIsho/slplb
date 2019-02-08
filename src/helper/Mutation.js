@@ -34,7 +34,7 @@ const Mutation = {
                 }
             })
             .catch(e => {
-                console.log(e);                
+                console.log(e);
             });
 
     },
@@ -98,7 +98,7 @@ const Mutation = {
                             new: true
                         }).then(data => {
                             console.log(data);
-                            
+
                             return data
                         })
                     })
@@ -180,6 +180,137 @@ const Mutation = {
             .catch(e => {
                 console.log(e);
             });
+    },
+
+    // Table
+    Table(parent, args, {
+        db
+    }, info) {
+
+        let season = args.season;
+        let tb = {};
+
+        tb.season = season;
+        tb.table = [];
+
+        return db.Table.find({
+            season
+        }).then(data => {
+            if (data.length == 0) {
+
+                let body = _.pick(args, ['team', 'gf', 'ga']);
+
+                body.played = 1;
+
+                if (args.status === "W") {
+                    body.point = 3
+                    body.win = 1
+                    body.lost = 0
+                    body.draw = 0
+                } else if (args.status === "D") {
+                    body.point = 1
+                    body.win = 0
+                    body.lost = 0
+                    body.draw = 1
+                } else {
+                    body.point = 0
+                    body.win = 0
+                    body.lost = 1
+                    body.draw = 0
+                }
+
+                body.form = _.pick(args, ['result', 'status']);
+
+                tb.table.push(body)
+                let table = new db.Table(tb);
+                table.save()
+                    .then(data => {
+                        return data
+                    })
+            } else {
+
+                let body = _.pick(args, ['team', 'gf', 'ga']);
+
+                if (args.status === "W") {
+                    body.point = 3
+                    body.win = 1
+                    body.lost = 0
+                    body.draw = 0
+                } else if (args.status === "D") {
+                    body.point = 1
+                    body.win = 0
+                    body.lost = 0
+                    body.draw = 1
+                } else {
+                    body.point = 0
+                    body.win = 0
+                    body.lost = 1
+                    body.draw = 0
+                }
+
+                body.form = _.pick(args, ['result', 'status']);
+
+                return db.Table.findOneAndUpdate({
+                        'table.team': args.team
+                    }, {
+                        $inc: {
+                            'table.$.played': 1,
+                            'table.$.gf': args.gf,
+                            'table.$.ga': args.ga,
+                            'table.$.win': body.win,
+                            'table.$.lost': body.lost,
+                            'table.$.draw': body.draw,
+                            'table.$.point': body.point
+                        },
+                        $push: {
+                            'table.$.form': body.form
+                        }
+                    }, {
+                        new: true
+                    })
+                    .then(data => {
+
+                        if (!data) {
+                            let body = _.pick(args, ['team', 'gf', 'ga']);
+
+                            body.played = 1;
+
+                            if (args.status === "W") {
+                                body.point = 3
+                                body.win = 1
+                                body.lost = 0
+                                body.draw = 0
+                            } else if (args.status === "D") {
+                                body.point = 1
+                                body.win = 0
+                                body.lost = 0
+                                body.draw = 1
+                            } else {
+                                body.point = 0
+                                body.win = 0
+                                body.lost = 1
+                                body.draw = 0
+                            }
+
+                            body.form = _.pick(args, ['result', 'status']);
+
+                            db.Table.findOneAndUpdate({
+                                season
+                            }, {
+                                $push: {
+                                    'table': body
+                                }
+                            }, {
+                                new: true
+                            }).then(data => {
+                                return data
+                            })
+
+                        } else return data
+                    });
+            }
+        })
+
     }
 }
 
