@@ -104,7 +104,6 @@ const Query = {
     },
     Table(parent, args, ctx, info) {
         return ctx.db.Table.find()
-            .exec()
             .then(table => {
 
                 table.map(data => {
@@ -118,19 +117,6 @@ const Query = {
                         }
 
                     });
-                    function compare(a, b) {
-                        if (a.gd > b.gd)
-                            return -1;
-                        if (a.gd < b.gd)
-                            return 1;
-
-                        return 0;
-                    }
-
-
-                    data.table.sort(compare);
-
-                    return data;
                 })
 
                 table.map(data => {
@@ -157,59 +143,73 @@ const Query = {
     },
     onTable(parent, args, ctx, info) {
         return ctx.db.Table.find()
-            .sort({
-                point: -1
-            })
-            .exec()
             .then(table => {
-                table.map(row => {
-                    let gd = parseInt(row.gf) - parseInt(row.ga)
+                table.map(data => {
+                    data.table.map((row, index) => {
+                        let gd = row.gf - row.ga
 
-                    if (gd > 0) {
-                        row.gd = "+" + gd
-                    } else {
-                        row.gd = gd
-                    }
-                });
+                        if (gd > 0) {
+                            row.gd = "+" + gd
+                        } else {
+                            row.gd = gd
+                        }
 
-                function compare(a, b) {
-                    if (a.gd > b.gd)
-                        return -1;
-                    if (a.gd < b.gd)
-                        return 1;
-                    return 0;
-                }
-
-                table.sort(compare);
-
-                table = table.map((obj, index) => {
-                    obj.pos = index + 1;
-                    return obj
-                });
-
-                let inx;
-
-                table.find((obj, index) => {
-                    if (obj.team === args.id) {
-                        inx = index;
-                        return index;
-                    }
-
+                    });
                 })
 
-                let onTable = '';
+                table.map(data => {
+                    function compare(a, b) {
+                        if (a.point > b.point)
+                            return -1;
+                        if (a.point < b.point)
+                            return 1;
+
+                        return 0;
+                    }
+
+
+                    data.table.sort(compare);
+
+                    return data;
+                })
+
+                let inx, onTable = '', testTable;
+
+                table.map(tb => {
+                    tb.table.map((t, index) => {
+                        t.pos = index + 1;
+                        return t;
+                    })
+
+                    tb.table.find((t, index) => {
+                        if (t.team === args.id) {
+                            inx = index;
+                            return t;
+                        }
+                    })
+
+                    testTable = tb.table;
+
+                    return tb;
+                })
 
                 if (inx !== 0) {
-                    if (inx + 2 <= table.length) {
-                        onTable = table.slice(inx - 1, inx + 2);
+                    if (inx + 2 <= testTable.length) {
+                        onTable = testTable.slice(inx - 1, inx + 2);
                     } else {
-                        onTable = table.slice(inx - 2, inx + 1);
+                        onTable = testTable.slice(inx - 2, inx + 1);
                     }
                 } else {
-                    onTable = table.slice(inx, inx + 3);
+                    onTable = testTable.slice(inx, inx + 3);
                 }
 
-                return onTable
+
+                table.map(tb => {
+                    tb.table = onTable;
+                    return tb
+                })
+                
+                return table;
             })
             .catch(e => {
                 console.log(e);
