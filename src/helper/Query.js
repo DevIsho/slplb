@@ -278,26 +278,26 @@ const Query = {
     Result(parent, args, ctx, info) {
 
         return ctx.db.Results.find()
-            .select('game date _id')
+            .select('games date _id')
             .then(results => {
 
                 let result = results.map((res) => {
 
-                    let data = res.game.filter(obj => {
+                    let data = res.games.filter(obj => {
                         if (obj.home === args.id || obj.away === args.id) {
                             return obj
                         }
                     })
 
                     return {
-                        game: [data[0]],
+                        games: [data[0]],
                         date: res.date,
                         _id: res._id
                     };
                 })
 
                 result = result.filter(obj => {
-                    return obj.game.find(g => {
+                    return obj.games.find(g => {
                         if (g !== undefined) {
                             return obj
                         }
