@@ -293,6 +293,79 @@ const Query = {
                 console.log(e);
             });
     },
+    //Club Win Stats
+    CWinStatis(parent, args, ctx, info){
+        return ctx.db.Table.find()
+        .then(table => {
+            table.map(data => {
+                function compare(a, b) {
+                    if (a.win > b.win)
+                        return -1;
+                    if (a.win < b.win)
+                        return 1;
+
+                    return 0;
+                }
+
+
+                data.table.sort(compare);
+                
+            })
+
+            return table;
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    },
+    CLossStatis(parent, args, ctx, info){
+        return ctx.db.Table.find()
+        .then(table => {
+            table.map(data => {
+                function compare(a, b) {
+                    if (a.lost > b.lost)
+                        return -1;
+                    if (a.lost < b.lost)
+                        return 1;
+
+                    return 0;
+                }
+
+
+                data.table.sort(compare);
+                
+            })
+
+            return table;
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    },
+    GoalsStatis(parent, args, ctx, info){
+        return ctx.db.Table.find()
+        .then(table => {
+            table.map(data => {
+                function compare(a, b) {
+                    if (a.gf > b.gf)
+                        return -1;
+                    if (a.gf < b.gf)
+                        return 1;
+
+                    return 0;
+                }
+
+
+                data.table.sort(compare);
+                
+            })
+
+            return table;
+        })
+        .catch(e => {
+            console.log(e);
+        });
+    },
     Results(parent, args, ctx, info) {
 
         return ctx.db.Results.find()

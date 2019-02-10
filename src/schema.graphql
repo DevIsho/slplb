@@ -17,6 +17,10 @@ type Query {
     NextGame: Fixture
     #Squad
     Squad(id: ID): [Player]
+    # Club Statis
+    CWinStatis: [Table]
+    CLossStatis: [Table]
+    GoalsStatis: [Table]
 }
 
 type Subscription{
