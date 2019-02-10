@@ -173,7 +173,8 @@ const Query = {
                     return data;
                 })
 
-                let inx, onTable = '', testTable;
+                let inx, onTable = '',
+                    testTable;
 
                 table.map(tb => {
                     tb.table.map((t, index) => {
@@ -208,7 +209,7 @@ const Query = {
                     tb.table = onTable;
                     return tb
                 })
-                
+
                 return table;
             })
             .catch(e => {
@@ -315,6 +316,32 @@ const Query = {
         return ctx.db.News.find()
             .then(news => {
                 return news
+            })
+            .catch(e => {
+                console.log(e);
+            });
+    },
+
+    // Squad
+    Squad(parent, args, ctx, info) {
+        return ctx.db.Player.find()
+            .then(players => {
+                let teamPlayers = players.map(p => {
+                    if (p.team == args.id) {
+                        return p;
+                    }
+                })
+
+                let team = teamPlayers.filter(pl => {
+                    if (pl != null) {
+                        return pl;
+                    }
+                })
+
+
+                return team;
+                
+                
             })
             .catch(e => {
                 console.log(e);
