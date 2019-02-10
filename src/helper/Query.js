@@ -174,6 +174,21 @@ const Query = {
 
                 table.map(data => {
                     function compare(a, b) {
+                        if (a.gd > b.gd)
+                            return -1;
+                        if (a.gd < b.gd)
+                            return 1;
+
+                        return 0;
+                    }
+
+
+                    data.table.sort(compare);
+                    
+                })
+
+                table.map(data => {
+                    function compare(a, b) {
                         if (a.point > b.point)
                             return -1;
                         if (a.point < b.point)
