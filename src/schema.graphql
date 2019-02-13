@@ -64,8 +64,7 @@ type Mutation {
         date: String!,
         home: ID!,
         away: ID!,
-        reporter: ID!,
-        gameId: ID!
+        reporter: ID!
     ): Fixture
 
     # Home Line-up
