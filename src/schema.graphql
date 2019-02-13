@@ -69,45 +69,45 @@ type Mutation {
 
     # Home Line-up
     HomeLineUp(
-        _id: String
+        _id: ID
         starting: [String]
     ):Match
 
     # Home Sub
     HomeSub(
-        _id: String
+        _id: ID
         Substitutes: [String]
     ):Match
 
     # Away Line-up
     AwayLineUp(
-        _id: String
+        _id: ID
         starting: [String]
     ):Match
 
     # Home Sub
     AwaySub(
-        _id: String
+        _id: ID
         Substitutes: [String]
     ):Match
 
     # Away Substitutions
     AwaySubstitutions(
-        _id: String
+        _id: ID
         in: String
         out: String
     ):Match
 
     # Home Substitutions
     HomeSubstitutions(
-        _id: String
+        _id: ID
         in: String
         out: String
     ):Match
 
     # Match Details
     MatchDetails(
-        _id: String!
+        _id: ID!
         action: String!
         player: String!
         team: String!
