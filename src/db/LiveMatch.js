@@ -13,6 +13,7 @@ const LiveMatchSchame = mongoose.Schema({
     home: {
         type: String
     },
+    time: {type: Number},
     away: {
         type: String
     },

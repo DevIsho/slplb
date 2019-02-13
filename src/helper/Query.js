@@ -37,32 +37,10 @@ const Query = {
                 console.log(e);
             });
     },
-    Matches(parent, args, ctx, info) {
-        return ctx.db.Match.find()
-            .then(match => {
-                return match;
-            })
-            .catch(e => {
-                console.log(e);
-            });
-    },
     LiveMatch(parent, args, ctx, info) {
-        return ctx.db.Fixtures.findOne()
-            .then(fix => {
-                let customFix, fixture;
-
-                fixture = fix;
-
-                customFix = fix.games;
-
-                customFix = customFix.filter(g => {
-                    if (g.assign === 'false')
-                        return g;
-                });
-
-                fixture.games = customFix;
-
-                return fixture;
+        return ctx.db.LiveMatch.find()
+            .then(data => {
+                return data;
             })
             .catch(e => {
                 console.log(e);

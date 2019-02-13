@@ -55,6 +55,7 @@ const resolvers = {
         })
     }
   },
+  // Live Match
   Match: {
     home(parent, args, ctx, info) {
       return ctx.db.Teams.findById(parent.home)

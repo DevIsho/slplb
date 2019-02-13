@@ -7,9 +7,10 @@ type Query {
     Fixture(id: ID): [Fixture]
     Results: [Result]
     Result(id: ID): [Result]
-    Matches: [Match]
+    # Live Match
+    LiveMatch: [Match]
     Report(reporter: ID): Match
-    LiveMatch: Fixture
+
     News: [News]
     OneNews(id: ID): News
     Table: [Table]
@@ -66,32 +67,46 @@ type Mutation {
         reporter: ID!,
         gameId: ID!
     ): Fixture
+
+    # Home Line-up
     HomeLineUp(
         _id: String
         starting: [String]
     ):Match
+
+    # Home Sub
     HomeSub(
         _id: String
         Substitutes: [String]
     ):Match
+
+    # Away Line-up
     AwayLineUp(
         _id: String
         starting: [String]
     ):Match
+
+    # Home Sub
     AwaySub(
         _id: String
         Substitutes: [String]
     ):Match
+
+    # Away Substitutions
     AwaySubstitutions(
         _id: String
         in: String
         out: String
     ):Match
+
+    # Home Substitutions
     HomeSubstitutions(
         _id: String
         in: String
         out: String
     ):Match
+
+    # Match Details
     MatchDetails(
         _id: String!
         action: String!
@@ -190,74 +205,6 @@ type Form {
     result: [Result]
 }
 
-
-
-type Match{
-    _id: ID
-    date: String
-    time: String
-    reporter: String
-    status: String
-    live: String
-    home: Home
-    away: Away
-    details: GameDatails
-}
-
-type GameDatails {
-    _id: ID
-    lineUp: LineUps,
-    matchInfo: MatchInfo
-    statistics: Statistics
-}
-
-type LineUps {
-    lineUp: LineUp
-    substitute: Substitute
-    substitutions: Substitutions
-}
-
-type LineUp {
-    home: [String]
-    away: [String]
-}
-
-type Substitute {
-    home: [String]
-    away: [String]
-}
-
-type Substitutions {
-    home: [Sub]
-    away: [Sub]
-}
-
-type Sub {
-    in: String
-    out: String
-}
-
-type MatchInfo {
-    yellowCard: [YellowCard]
-    redCard: [RedCard]
-    goals: [Goals]
-}
-
-type YellowCard {
-    time: String,
-    player: String
-}
-
-type RedCard {
-    time: String,
-    player: String
-}
-
-type Goals {
-    time: String
-    player: String
-}
-
 type Statistics {
     onTarget: Stat
     offTarget: Stat
@@ -311,4 +258,45 @@ type Game {
     away: Away
     homeGoals: String
     awayGoals: String
+}
+
+# Live Match
+type Match{
+    _id: ID
+    date: String
+    time: Int
+    reporter: String
+    home: Home
+    away: Away
+    lineUp: LineUps
+    matchDetails: [MatchDetails]
+}
+
+type LineUps {
+    home: HomeLineUp
+    away: AwayLineUp
+}
+
+type HomeLineUp {
+    Starting: [String]
+    Substitutes: [String]
+    Substitutions: [Substitutions]
+}
+
+type AwayLineUp {
+    Starting: [String]
+    Substitutes: [String]
+    Substitutions: [Substitutions]
+}
+
+type Substitutions {
+    in: String
+    out: String
+}
+
+type MatchDetails {
+    action: String
+    player: String
+    team: String
+    time: String
 }
