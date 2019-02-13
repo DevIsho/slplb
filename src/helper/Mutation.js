@@ -114,44 +114,16 @@ const Mutation = {
             .catch()
 
     },
-    newMatch(parent, args, ctx, info) {
-        let match = new ctx.db.Match(args)
-        return match.save()
-            .then(match => {
-                return ctx.db.Fixtures.findOneAndUpdate({
-                        'games._id': args.gameId
-                    }, {
-                        $set: {
-                            'games.$.assign': true
-                        }
-                    }, {
-                        new: true
-                    })
-                    .then(fix => {
-                        let customFix, fixture;
-
-                        fixture = fix;
-
-                        customFix = fix.games;
-
-                        customFix = customFix.filter(g => {
-                            if (g.assign === 'false')
-                                return g;
-                        });
-
-                        fixture.games = customFix;
-
-                        return fixture;
-                    })
-                    .catch(e => {
-                        console.log(e);
-                    })
-
-            })
-            .catch(e => {
-                console.log(e);
-
-            })
+    // Live Match
+    LiveMatch(parent, args, {
+        db
+    }, info) {
+        let body = _.pick(args, ['date', 'gameId', 'home', 'away', 'reporter'])
+        let live = new db.LiveMatch(body);
+        return live.save()
+            .then(data => {
+                return data
+            });
     },
     LiveTime(parent, {
         id,
@@ -312,7 +284,136 @@ const Mutation = {
         })
 
     },
+    // LineUp
+    HomeLineUp(parent, args, {
+        db
+    }, info) {
+        let starting = args.starting;
 
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $set: {
+                'lineUp.home.Starting': starting
+            }
+        }, {
+            new: true
+        }).then(data => {
+            
+            return data;
+        })
+
+    },
+    AwayLineUp(parent, args, {
+        db
+    }, info) {
+        let starting = args.starting;
+
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $set: {
+                'lineUp.away.Starting': starting
+            }
+        }, {
+            new: true
+        }).then(data => {
+            
+            return data;
+        })
+
+    },
+    HomeSub(parent, args, {
+        db
+    }, info) {
+        let Substitutes = args.Substitutes;
+
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $set: {
+                'lineUp.home.Substitutes': Substitutes
+            }
+        }, {
+            new: true
+        }).then(data => {
+            
+            return data;
+        })
+
+    },
+    AwaySub(parent, args, {
+        db
+    }, info) {
+        let Substitutes = args.Substitutes;
+
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $set: {
+                'lineUp.away.Substitutes': Substitutes
+            }
+        }, {
+            new: true
+        }).then(data => {
+            return data;
+        })
+
+    },
+    HomeSubstitutions(parent, args, {
+        db
+    }, info) {
+        let body = _.pick(args, ['in', 'out'])
+
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $push: {
+                'lineUp.home.Substitutions': body
+            }
+        }, {
+            new: true
+        }).then(data => {
+            return data;
+        })
+
+    },
+    AwaySubstitutions(parent, args, {
+        db
+    }, info) {
+        let body = _.pick(args, ['in', 'out'])
+
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $push: {
+                'lineUp.away.Substitutions': body
+            }
+        }, {
+            new: true
+        }).then(data => {
+            return data;
+        })
+
+    },
+    MatchDetails(parent, args, {
+        db
+    }, info) {
+        let body = _.pick(args, ['action', 'player', 'team', 'time']);
+
+        return db.LiveMatch.findOneAndUpdate({
+            _id: args._id
+        }, {
+            $push: {
+                matchDetails: body
+            }
+        }, {
+            new: true
+        }).then(data => {
+            return data;
+        })
+
+    },
     // News
     News(parent, args, {
         db
@@ -326,7 +427,7 @@ const Mutation = {
             .then(data => {
                 return data
             })
-        
+
     }
 }
 

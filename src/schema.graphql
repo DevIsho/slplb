@@ -59,13 +59,46 @@ type Mutation {
         awayGoals: String!
     ): Result
 
-    newMatch(
+    LiveMatch(
         date: String!,
         home: ID!,
         away: ID!,
         reporter: ID!,
         gameId: ID!
     ): Fixture
+    HomeLineUp(
+        _id: String
+        starting: [String]
+    ):Match
+    HomeSub(
+        _id: String
+        Substitutes: [String]
+    ):Match
+    AwayLineUp(
+        _id: String
+        starting: [String]
+    ):Match
+    AwaySub(
+        _id: String
+        Substitutes: [String]
+    ):Match
+    AwaySubstitutions(
+        _id: String
+        in: String
+        out: String
+    ):Match
+    HomeSubstitutions(
+        _id: String
+        in: String
+        out: String
+    ):Match
+    MatchDetails(
+        _id: String!
+        action: String!
+        player: String!
+        team: String!
+        time: String!
+    ):Match
     LiveTime(
         id: ID!,
         time: Int!

@@ -4,7 +4,7 @@ import Fixtures from "./Fixture";
 import Results from "./Result";
 import News from "./News";
 import Table from "./Table";
-import Match from "./MatchUpdate";
+import LiveMatch from "./LiveMatch";
 import Player from "./Players";
 
 //'mongodb://isho:isho1%40gmail.com@ds223015.mlab.com:23015/slplb_database'
@@ -16,7 +16,7 @@ const db = {
     Results,
     News,
     Table,
-    Match,
+    LiveMatch,
     Player
 }
 
