@@ -65,7 +65,7 @@ type Mutation {
         home: ID!,
         away: ID!,
         reporter: ID!
-    ): Fixture
+    ): Match
 
     # Home Line-up
     HomeLineUp(
