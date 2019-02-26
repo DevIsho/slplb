@@ -277,13 +277,13 @@ type LineUps {
 }
 
 type HomeLineUp {
-    Starting: [String]
+    Starting: [Player]
     Substitutes: [String]
     Substitutions: [Substitutions]
 }
 
 type AwayLineUp {
-    Starting: [String]
+    Starting: [Player]
     Substitutes: [String]
     Substitutions: [Substitutions]
 }

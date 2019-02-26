@@ -70,6 +70,34 @@ const resolvers = {
         })
     }
   },
+  HomeLineUp: {
+    Starting(parent, args, ctx, info) {
+
+      let pl = parent.Starting.map(p => {
+        return ctx.db.Player.findById(p)
+          .then(player => {
+
+            return player
+          })
+      });
+
+      return pl;
+      
+    }
+  },
+  AwayLineUp: {
+    Starting(parent, args, ctx, info) {
+      let pl = parent.Starting.map(p => {
+        return ctx.db.Player.findById(p)
+          .then(player => {
+
+            return player
+          })
+      });
+
+      return pl;
+    }
+  },
   Mutation
 }
 
@@ -92,4 +120,4 @@ const option = {
   }
 }
 
-server.start(option, () => console.log('Server is running on localhost:'+port))
+server.start(option, () => console.log('Server is running on localhost:' + port))
